@@ -7,30 +7,56 @@ function App() {
     this.tvMain = document.getElementById('text-main');
     this.content = document.getElementById('main-content');
     this.iconAccount = document.getElementById('icon-account');
+    this.pushKey = null;
 
     this.content.style.background = 'black';
     this.tvMain.style.color = 'white';
-    firebase.auth().onAuthStateChanged(this.onAuthStateChanged.bind(this));
     this.fabButton.addEventListener('click',function(){
-      if(firebase.auth().currentUser){
-        //logout
-        firebase.auth().signOut();
+      if(this.pushKey == null){
+        this.pushKey = firebase.database().ref(`connected`).push().key;
+        firebase.database().ref(`connected/${this.pushKey}`).update({
+          backgroundColor: "#000000",
+          connected: true,
+          deviceId: `${this.pushKey}`,
+          display: "Welcome to fireDisplay",
+          textColor: "#FFFFFF"
+        });
+        this.listenToData();
+        this.iconAccount.innerHTML = 'pause';
       }else{
-        //login
-        var google = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(google);
+        //logout
+        this.iconAccount.innerHTML = 'play_arrow';
+        firebase.database().ref(`connected/${this.pushKey}`).update({
+          backgroundColor: null,
+          connected: null,
+          deviceId: null,
+          display: null,
+          textColor: null
+        });
+        this.tvMain.innerHTML = 'Welcome back!'
+        this.pushKey = null;
       }
-    })
+    }.bind(this));
 
   }.bind(this));
 };
 
 App.prototype.listenToData = function(){
-  var connected = firebase.database().ref('connected/').orderByChild('deviceId').equalTo(`${firebase.auth().currentUser.uid}`);
+
+  var connection = firebase.database().ref(`connected/`);
+  connection.once('value', function(snapshot) {
+    console.log(snapshot.val());
+    if(snapshot.val()){
+      this.tvMain.innerHTML = `Your device is ${snapshot.numChildren()}`;
+    }
+  }.bind(this));
+
+  var ref = firebase.database().ref(`connected/${this.pushKey}`);
+
+  var connected = firebase.database().ref('connected/').orderByChild('deviceId').equalTo(`${this.pushKey}`);
   connected.on('child_added', function(snapshot) {
     if(snapshot.val()){
       this.content.style.background = snapshot.val().backgroundColor;
-      this.tvMain.innerHTML = snapshot.val().display;
       this.tvMain.style.color = snapshot.val().textColor;
     }
   }.bind(this));
@@ -63,14 +89,7 @@ App.prototype.onAuthStateChanged = function(user) {
 
     //this.usersCard.style.display = 'block';
     //Show need to login page for something
-    firebase.database().ref(`connected/${user.uid}`).update({
-      displayName: user.displayName,
-      backgroundColor: "#000000",
-      connected: true,
-      deviceId: `${user.uid}`,
-      display: "Welcome to fireDisplay",
-      textColor: "#FFFFFF"
-    });
+
     this.listenToData();
     this.currentUid = user.uid;
     this.iconAccount.innerHTML = 'pause';

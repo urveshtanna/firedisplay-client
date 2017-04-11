@@ -6,8 +6,7 @@ const request = require('request')
 const app = express()
 
 // set the view engine to ejs
-app.use(express.static(__dirname + '/views'));
-app.set('views', __dirname + '/views');
+app.use('/required', express.static('required'));
 app.set('view engine', 'ejs');
 app.set('port', (process.env.PORT || 3000));
 
@@ -19,11 +18,11 @@ app.use(bodyParser.json());
 
 // // Index route
 app.get('/', function (req, res) {
-	res.render('/index');
+	res.render('pages/index');
 });
 
 app.get('*', function(req, res) {
-    res.render('index');
+    res.render('pages/index');
 });
 
 // // Index route
