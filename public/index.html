@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome to Fire Display</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <!-- <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css"> -->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-red.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="manifest" href="manifest.json">
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 16px;
+      margin-bottom: 16px;
+      z-index: 900;
+    }
+    .typed-cursor{
+      	opacity: 1;
+      	-webkit-animation: blink 0.7s infinite;
+      	-moz-animation: blink 0.7s infinite;
+      	animation: blink 0.7s infinite;
+      }
+      @keyframes blink{
+      	0% { opacity:1; }
+      	50% { opacity:0; }
+      	100% { opacity:1; }
+      }
+      @-webkit-keyframes blink{
+      	0% { opacity:1; }
+      	50% { opacity:0; }
+      	100% { opacity:1; }
+      }
+      @-moz-keyframes blink{
+      	0% { opacity:1; }
+      	50% { opacity:0; }
+      	100% { opacity:1; }
+      }
+    </style>
+    </head>
+
+    <body id="main-content" style="font-family: Helvetica,Arial,sans-serif;font-size: 14px;font-weight: 400; line-height: 164px;">
+    <div style="display: flex;justify-content: center;height:inherit;align-items: center;" id="content">
+      <div id="text-main" style="font-size:8em;">Welcome to fireDisplay</div>
+      <button id="view-source" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"><i class="material-icons" id="icon-account">play_arrow</i></button>
+      <div class="mdl-tooltip mdl-tooltip--top" data-mdl-for="view-source">Login to get started</div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+      <script>
+        // Initialize Firebase
+        var config = {
+          apiKey: "AIzaSyCroIjAorHQFzM2k7vLX27aCWQxiJVoAEI",
+          authDomain: "this-is-me-a1307.firebaseapp.com",
+          databaseURL: "https://this-is-me-a1307.firebaseio.com",
+          projectId: "this-is-me-a1307",
+          storageBucket: "this-is-me-a1307.appspot.com",
+          messagingSenderId: "19978525731"
+        };
+        firebase.initializeApp(config);
+      </script>
+      <script src="main.js"></script>
+      <script language="javascript">
+       function autoResizeDiv()
+       {
+           document.getElementById('main-content').style.height = window.innerHeight +'px';
+       }
+       window.onresize = autoResizeDiv;
+       autoResizeDiv();
+   </script>
+  </body>
+</html>

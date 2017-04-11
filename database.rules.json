@@ -1,0 +1,18 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+    "contact_us": {
+      ".read": false,
+      ".write": true
+    },
+    "projects": {
+      ".read": true,
+      ".write": false
+    },
+    "connected": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}
