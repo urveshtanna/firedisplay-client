@@ -50,11 +50,11 @@ function App() {
 
 App.prototype.getCharCount = function(screenSize){
     if(screenSize <= 640){
-      return 5;
-    }else if(screenSize <= 800){
       return 10;
+    }else if(screenSize <= 800){
+      return 15;
     }else{
-      return 30;
+      return 20;
     }
 }
 
