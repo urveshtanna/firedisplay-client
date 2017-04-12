@@ -8,7 +8,7 @@ function App() {
     this.content = document.getElementById('main-content');
     this.iconAccount = document.getElementById('icon-account');
     this.pushKey = null;
-
+    console.log();
     this.content.style.background = 'black';
     this.tvMain.style.color = 'white';
     this.fabButton.addEventListener('click',function(){
@@ -19,7 +19,9 @@ function App() {
           connected: true,
           deviceId: `${this.pushKey}`,
           display: "Welcome to fireDisplay",
-          textColor: "#FFFFFF"
+          textColor: "#FFFFFF",
+          size : `${screen.width}`,
+          char_count : `${this.getCharCount(screen.width)}`
         });
         this.listenToData();
         this.iconAccount.innerHTML = 'pause';
@@ -40,6 +42,21 @@ function App() {
 
   }.bind(this));
 };
+
+// 640px
+  // 800px
+  // 1024px
+  // px
+
+App.prototype.getCharCount = function(screenSize){
+    if(screenSize <= 640){
+      return 5;
+    }else if(screenSize <= 800){
+      return 10;
+    }else{
+      return 30;
+    }
+}
 
 App.prototype.listenToData = function(){
 
